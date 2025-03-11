@@ -293,30 +293,273 @@ td .signature {
     searchContainer.appendChild(searchTitle);
     searchContainer.appendChild(searchInput);
     
+    // Add filter controls
+    const filtersTitle = document.createElement('h3');
+    filtersTitle.textContent = 'Filters';
+    filtersTitle.style.marginTop = '15px';
+    filtersTitle.style.marginBottom = '10px';
+    searchContainer.appendChild(filtersTitle);
+    
+    // Filter containers
+    const filtersContainer = document.createElement('div');
+    filtersContainer.style.display = 'flex';
+    filtersContainer.style.flexWrap = 'wrap';
+    filtersContainer.style.gap = '20px';
+    searchContainer.appendChild(filtersContainer);
+    
+    // Create benchmark table filters
+    const benchmarkFilters = document.createElement('div');
+    benchmarkFilters.style.flex = '1';
+    benchmarkFilters.style.minWidth = '250px';
+    
+    const benchmarkTitle = document.createElement('h4');
+    benchmarkTitle.textContent = 'Benchmark Filters';
+    benchmarkTitle.style.marginBottom = '10px';
+    benchmarkFilters.appendChild(benchmarkTitle);
+    
+    // Project filter (dropdown)
+    const projectFilterContainer = document.createElement('div');
+    projectFilterContainer.style.marginBottom = '10px';
+    
+    const projectLabel = document.createElement('label');
+    projectLabel.textContent = 'Project:';
+    projectLabel.style.display = 'block';
+    projectLabel.style.marginBottom = '3px';
+    
+    const projectSelect = document.createElement('select');
+    projectSelect.id = 'project-filter';
+    projectSelect.dataset.tableId = 'benchmark-table';
+    projectSelect.dataset.column = '1';
+    projectSelect.dataset.filterType = 'select';
+    projectSelect.style.width = '100%';
+    projectSelect.style.padding = '5px';
+    
+    // Add default option
+    const defaultProjectOption = document.createElement('option');
+    defaultProjectOption.value = '';
+    defaultProjectOption.textContent = 'All';
+    projectSelect.appendChild(defaultProjectOption);
+    
+    // Get unique project values
+    const benchmarkTable = document.getElementById('benchmark-table');
+    if (benchmarkTable) {
+        const uniqueProjects = new Set();
+        Array.from(benchmarkTable.querySelectorAll('tbody tr')).forEach(row => {
+            const projectCell = row.children[1];
+            const projectName = projectCell.querySelector('.project')?.textContent;
+            if (projectName) uniqueProjects.add(projectName);
+        });
+        
+        // Add options for each project
+        Array.from(uniqueProjects).sort().forEach(project => {
+            const option = document.createElement('option');
+            option.value = project;
+            option.textContent = project;
+            projectSelect.appendChild(option);
+        });
+    }
+    
+    projectFilterContainer.appendChild(projectLabel);
+    projectFilterContainer.appendChild(projectSelect);
+    benchmarkFilters.appendChild(projectFilterContainer);
+    
+    // Status filter (dropdown)
+    const statusFilterContainer = document.createElement('div');
+    statusFilterContainer.style.marginBottom = '10px';
+    
+    const statusLabel = document.createElement('label');
+    statusLabel.textContent = 'Status:';
+    statusLabel.style.display = 'block';
+    statusLabel.style.marginBottom = '3px';
+    
+    const statusSelect = document.createElement('select');
+    statusSelect.id = 'status-filter';
+    statusSelect.dataset.tableId = 'benchmark-table';
+    statusSelect.dataset.column = '2';
+    statusSelect.dataset.filterType = 'select';
+    statusSelect.style.width = '100%';
+    statusSelect.style.padding = '5px';
+    
+    // Add default option
+    const defaultStatusOption = document.createElement('option');
+    defaultStatusOption.value = '';
+    defaultStatusOption.textContent = 'All';
+    statusSelect.appendChild(defaultStatusOption);
+    
+    // Get unique status values
+    if (benchmarkTable) {
+        const uniqueStatuses = new Set();
+        Array.from(benchmarkTable.querySelectorAll('tbody tr')).forEach(row => {
+            const statusCell = row.children[2];
+            const statusValue = statusCell.dataset.sortValue || statusCell.textContent.trim();
+            if (statusValue) uniqueStatuses.add(statusValue);
+        });
+        
+        // Add options for each status
+        Array.from(uniqueStatuses).sort().forEach(status => {
+            const option = document.createElement('option');
+            option.value = status;
+            option.textContent = status;
+            statusSelect.appendChild(option);
+        });
+    }
+    
+    statusFilterContainer.appendChild(statusLabel);
+    statusFilterContainer.appendChild(statusSelect);
+    benchmarkFilters.appendChild(statusFilterContainer);
+    
+    // Add benchmark filters to the container
+    filtersContainer.appendChild(benchmarkFilters);
+    
+    // Create project summary filters
+    const projectSummaryFilters = document.createElement('div');
+    projectSummaryFilters.style.flex = '1';
+    projectSummaryFilters.style.minWidth = '250px';
+    
+    const projectSummaryTitle = document.createElement('h4');
+    projectSummaryTitle.textContent = 'Project Summary Filters';
+    projectSummaryTitle.style.marginBottom = '10px';
+    projectSummaryFilters.appendChild(projectSummaryTitle);
+    
+    // Project name filter for summary table
+    const projectNameFilterContainer = document.createElement('div');
+    projectNameFilterContainer.style.marginBottom = '10px';
+    
+    const projectNameLabel = document.createElement('label');
+    projectNameLabel.textContent = 'Project Name:';
+    projectNameLabel.style.display = 'block';
+    projectNameLabel.style.marginBottom = '3px';
+    
+    const projectNameSelect = document.createElement('select');
+    projectNameSelect.id = 'project-name-filter';
+    projectNameSelect.dataset.tableId = 'summary-table';
+    projectNameSelect.dataset.column = '1';
+    projectNameSelect.dataset.filterType = 'select';
+    projectNameSelect.style.width = '100%';
+    projectNameSelect.style.padding = '5px';
+    
+    // Add default option
+    const defaultProjectNameOption = document.createElement('option');
+    defaultProjectNameOption.value = '';
+    defaultProjectNameOption.textContent = 'All';
+    projectNameSelect.appendChild(defaultProjectNameOption);
+    
+    // Get unique project names from summary table
+    const summaryTable = document.getElementById('summary-table');
+    if (summaryTable) {
+        const uniqueProjectNames = new Set();
+        Array.from(summaryTable.querySelectorAll('tbody tr')).forEach(row => {
+            const projectNameCell = row.children[1];
+            const projectName = projectNameCell.dataset.sortValue || projectNameCell.textContent.trim();
+            if (projectName) uniqueProjectNames.add(projectName);
+        });
+        
+        // Add options for each project name
+        Array.from(uniqueProjectNames).sort().forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            projectNameSelect.appendChild(option);
+        });
+    }
+    
+    projectNameFilterContainer.appendChild(projectNameLabel);
+    projectNameFilterContainer.appendChild(projectNameSelect);
+    projectSummaryFilters.appendChild(projectNameFilterContainer);
+    
+    // Add project summary filters to the container
+    filtersContainer.appendChild(projectSummaryFilters);
+    
+    // Reset button
+    const resetButtonContainer = document.createElement('div');
+    resetButtonContainer.style.marginTop = '15px';
+    resetButtonContainer.style.textAlign = 'right';
+    
+    const resetButton = document.createElement('button');
+    resetButton.textContent = 'Reset Filters';
+    resetButton.style.padding = '6px 12px';
+    resetButton.style.backgroundColor = '#f44336';
+    resetButton.style.color = 'white';
+    resetButton.style.border = 'none';
+    resetButton.style.borderRadius = '4px';
+    resetButton.style.cursor = 'pointer';
+    
+    resetButton.addEventListener('click', () => {
+        // Reset all filter inputs
+        document.querySelectorAll('#project-filter, #status-filter, #project-name-filter').forEach(input => {
+            input.value = '';
+        });
+        
+        // Clear the search input
+        searchInput.value = '';
+        
+        // Show all rows
+        document.querySelectorAll('table.sortable-table tbody tr').forEach(row => {
+            row.style.display = '';
+        });
+    });
+    
+    resetButtonContainer.appendChild(resetButton);
+    searchContainer.appendChild(resetButtonContainer);
+    
     // Insert search container at the top of the page
     const firstTable = document.querySelector('table');
     firstTable.parentNode.insertBefore(searchContainer, firstTable);
     
-    // Search function
+    // Enhanced search function that includes filters
     function performSearch() {
         const searchTerm = searchInput.value.toLowerCase().trim();
-        const tables = document.querySelectorAll('table');
+        const tables = document.querySelectorAll('table.sortable-table');
+        
+        // Get filter values
+        const projectFilter = document.getElementById('project-filter').value;
+        const statusFilter = document.getElementById('status-filter').value;
+        const projectNameFilter = document.getElementById('project-name-filter').value;
         
         tables.forEach(table => {
             const rows = Array.from(table.querySelectorAll('tbody tr'));
+            const tableId = table.id;
             
             rows.forEach(row => {
+                // Always check global search first
                 const text = row.textContent.toLowerCase();
-                const isMatch = searchTerm === '' || text.includes(searchTerm);
+                let isMatch = searchTerm === '' || text.includes(searchTerm);
                 
-                // Toggle row visibility based on search match
+                // Apply table-specific filters
+                if (isMatch && tableId === 'benchmark-table') {
+                    // Project filter
+                    if (projectFilter) {
+                        const projectCell = row.children[1];
+                        const projectName = projectCell.querySelector('.project')?.textContent;
+                        if (projectName !== projectFilter) isMatch = false;
+                    }
+                    
+                    // Status filter
+                    if (isMatch && statusFilter) {
+                        const statusCell = row.children[2];
+                        const statusValue = statusCell.dataset.sortValue || statusCell.textContent.trim();
+                        if (statusValue !== statusFilter) isMatch = false;
+                    }
+                } else if (isMatch && tableId === 'summary-table') {
+                    // Project name filter for summary table
+                    if (projectNameFilter) {
+                        const projectNameCell = row.children[1];
+                        const projectName = projectNameCell.dataset.sortValue || projectNameCell.textContent.trim();
+                        if (projectName !== projectNameFilter) isMatch = false;
+                    }
+                }
+                
+                // Toggle row visibility based on all filter results
                 row.style.display = isMatch ? '' : 'none';
             });
         });
     }
     
-    // Add event listener
+    // Add event listeners to search and filters
     searchInput.addEventListener('input', performSearch);
+    document.getElementById('project-filter').addEventListener('change', performSearch);
+    document.getElementById('status-filter').addEventListener('change', performSearch);
+    document.getElementById('project-name-filter').addEventListener('change', performSearch);
 })();
 </script>
 {% endblock %}
