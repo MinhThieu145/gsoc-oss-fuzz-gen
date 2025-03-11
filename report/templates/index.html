@@ -266,8 +266,57 @@ td .signature {
                 }
             }, )
         );
-
     }
+    
+    // Create search UI elements
+    const searchContainer = document.createElement('div');
+    searchContainer.style.margin = '20px 0';
+    searchContainer.style.padding = '15px';
+    searchContainer.style.backgroundColor = '#f8f9fa';
+    searchContainer.style.border = '1px solid #dedede';
+    searchContainer.style.borderRadius = '4px';
+    
+    const searchTitle = document.createElement('h2');
+    searchTitle.textContent = 'Search Reports';
+    
+    const searchInput = document.createElement('input');
+    searchInput.setAttribute('type', 'text');
+    searchInput.setAttribute('placeholder', 'Search for projects, benchmarks, or other content...');
+    searchInput.style.width = '100%';
+    searchInput.style.padding = '8px';
+    searchInput.style.border = '1px solid #ccc';
+    searchInput.style.borderRadius = '4px';
+    searchInput.style.fontSize = '16px';
+    searchInput.style.marginBottom = '10px';
+    
+    // Add elements to DOM
+    searchContainer.appendChild(searchTitle);
+    searchContainer.appendChild(searchInput);
+    
+    // Insert search container at the top of the page
+    const firstTable = document.querySelector('table');
+    firstTable.parentNode.insertBefore(searchContainer, firstTable);
+    
+    // Search function
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const tables = document.querySelectorAll('table');
+        
+        tables.forEach(table => {
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                const isMatch = searchTerm === '' || text.includes(searchTerm);
+                
+                // Toggle row visibility based on search match
+                row.style.display = isMatch ? '' : 'none';
+            });
+        });
+    }
+    
+    // Add event listener
+    searchInput.addEventListener('input', performSearch);
 })();
 </script>
 {% endblock %}
