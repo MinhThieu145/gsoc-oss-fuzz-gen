@@ -408,6 +408,160 @@ td .signature {
     statusFilterContainer.appendChild(statusSelect);
     benchmarkFilters.appendChild(statusFilterContainer);
     
+    // Build Rate filter (slider)
+    const buildRateFilterContainer = document.createElement('div');
+    buildRateFilterContainer.style.marginBottom = '15px';
+    
+    const buildRateLabel = document.createElement('label');
+    buildRateLabel.textContent = 'Min Build Rate:';
+    buildRateLabel.style.display = 'block';
+    buildRateLabel.style.marginBottom = '3px';
+    
+    // Create slider container to show the value
+    const buildRateSliderContainer = document.createElement('div');
+    buildRateSliderContainer.style.display = 'flex';
+    buildRateSliderContainer.style.alignItems = 'center';
+    buildRateSliderContainer.style.gap = '10px';
+    
+    const buildRateSlider = document.createElement('input');
+    buildRateSlider.type = 'range';
+    buildRateSlider.id = 'build-rate-filter';
+    buildRateSlider.dataset.tableId = 'benchmark-table';
+    buildRateSlider.dataset.column = '3';
+    buildRateSlider.dataset.filterType = 'range';
+    buildRateSlider.min = 0;
+    buildRateSlider.max = 100;
+    buildRateSlider.step = 5;
+    buildRateSlider.value = 0;
+    buildRateSlider.style.width = '70%';
+    
+    const buildRateValue = document.createElement('span');
+    buildRateValue.textContent = '0%';
+    buildRateValue.style.width = '40px';
+    buildRateValue.style.textAlign = 'right';
+    
+    buildRateSlider.addEventListener('input', () => {
+        buildRateValue.textContent = buildRateSlider.value + '%';
+    });
+    
+    buildRateSliderContainer.appendChild(buildRateSlider);
+    buildRateSliderContainer.appendChild(buildRateValue);
+    
+    buildRateFilterContainer.appendChild(buildRateLabel);
+    buildRateFilterContainer.appendChild(buildRateSliderContainer);
+    benchmarkFilters.appendChild(buildRateFilterContainer);
+    
+    // Crash Rate filter (slider)
+    const crashRateFilterContainer = document.createElement('div');
+    crashRateFilterContainer.style.marginBottom = '15px';
+    
+    const crashRateLabel = document.createElement('label');
+    crashRateLabel.textContent = 'Min Crash Rate:';
+    crashRateLabel.style.display = 'block';
+    crashRateLabel.style.marginBottom = '3px';
+    
+    // Create slider container
+    const crashRateSliderContainer = document.createElement('div');
+    crashRateSliderContainer.style.display = 'flex';
+    crashRateSliderContainer.style.alignItems = 'center';
+    crashRateSliderContainer.style.gap = '10px';
+    
+    const crashRateSlider = document.createElement('input');
+    crashRateSlider.type = 'range';
+    crashRateSlider.id = 'crash-rate-filter';
+    crashRateSlider.dataset.tableId = 'benchmark-table';
+    crashRateSlider.dataset.column = '4';
+    crashRateSlider.dataset.filterType = 'range';
+    crashRateSlider.min = 0;
+    crashRateSlider.max = 100;
+    crashRateSlider.step = 5;
+    crashRateSlider.value = 0;
+    crashRateSlider.style.width = '70%';
+    
+    const crashRateValue = document.createElement('span');
+    crashRateValue.textContent = '0%';
+    crashRateValue.style.width = '40px';
+    crashRateValue.style.textAlign = 'right';
+    
+    crashRateSlider.addEventListener('input', () => {
+        crashRateValue.textContent = crashRateSlider.value + '%';
+    });
+    
+    crashRateSliderContainer.appendChild(crashRateSlider);
+    crashRateSliderContainer.appendChild(crashRateValue);
+    
+    crashRateFilterContainer.appendChild(crashRateLabel);
+    crashRateFilterContainer.appendChild(crashRateSliderContainer);
+    benchmarkFilters.appendChild(crashRateFilterContainer);
+    
+    // Coverage filter (slider)
+    const coverageFilterContainer = document.createElement('div');
+    coverageFilterContainer.style.marginBottom = '15px';
+    
+    const coverageLabel = document.createElement('label');
+    coverageLabel.textContent = 'Min Coverage:';
+    coverageLabel.style.display = 'block';
+    coverageLabel.style.marginBottom = '3px';
+    
+    // Create slider container
+    const coverageSliderContainer = document.createElement('div');
+    coverageSliderContainer.style.display = 'flex';
+    coverageSliderContainer.style.alignItems = 'center';
+    coverageSliderContainer.style.gap = '10px';
+    
+    const coverageSlider = document.createElement('input');
+    coverageSlider.type = 'range';
+    coverageSlider.id = 'coverage-filter';
+    coverageSlider.dataset.tableId = 'benchmark-table';
+    coverageSlider.dataset.column = '6';
+    coverageSlider.dataset.filterType = 'range';
+    coverageSlider.min = 0;
+    coverageSlider.max = 100;
+    coverageSlider.step = 5;
+    coverageSlider.value = 0;
+    coverageSlider.style.width = '70%';
+    
+    const coverageValue = document.createElement('span');
+    coverageValue.textContent = '0%';
+    coverageValue.style.width = '40px';
+    coverageValue.style.textAlign = 'right';
+    
+    coverageSlider.addEventListener('input', () => {
+        coverageValue.textContent = coverageSlider.value + '%';
+    });
+    
+    coverageSliderContainer.appendChild(coverageSlider);
+    coverageSliderContainer.appendChild(coverageValue);
+    
+    coverageFilterContainer.appendChild(coverageLabel);
+    coverageFilterContainer.appendChild(coverageSliderContainer);
+    benchmarkFilters.appendChild(coverageFilterContainer);
+    
+    // Add Bugs filter (checkbox)
+    const bugFilterContainer = document.createElement('div');
+    bugFilterContainer.style.marginBottom = '15px';
+    
+    const bugLabel = document.createElement('label');
+    bugLabel.style.display = 'flex';
+    bugLabel.style.alignItems = 'center';
+    bugLabel.style.gap = '5px';
+    bugLabel.style.cursor = 'pointer';
+    
+    const bugCheckbox = document.createElement('input');
+    bugCheckbox.type = 'checkbox';
+    bugCheckbox.id = 'bugs-filter';
+    bugCheckbox.dataset.tableId = 'benchmark-table';
+    bugCheckbox.dataset.column = '5';
+    bugCheckbox.dataset.filterType = 'checkbox';
+    
+    const bugLabelText = document.createTextNode('Show only benchmarks with bugs');
+    
+    bugLabel.appendChild(bugCheckbox);
+    bugLabel.appendChild(bugLabelText);
+    
+    bugFilterContainer.appendChild(bugLabel);
+    benchmarkFilters.appendChild(bugFilterContainer);
+    
     // Add benchmark filters to the container
     filtersContainer.appendChild(benchmarkFilters);
     
@@ -467,8 +621,197 @@ td .signature {
     projectNameFilterContainer.appendChild(projectNameSelect);
     projectSummaryFilters.appendChild(projectNameFilterContainer);
     
+    // Coverage Gain filter (slider)
+    const coverageGainFilterContainer = document.createElement('div');
+    coverageGainFilterContainer.style.marginBottom = '15px';
+    
+    const coverageGainLabel = document.createElement('label');
+    coverageGainLabel.textContent = 'Min Coverage Gain:';
+    coverageGainLabel.style.display = 'block';
+    coverageGainLabel.style.marginBottom = '3px';
+    
+    // Create slider container
+    const coverageGainSliderContainer = document.createElement('div');
+    coverageGainSliderContainer.style.display = 'flex';
+    coverageGainSliderContainer.style.alignItems = 'center';
+    coverageGainSliderContainer.style.gap = '10px';
+    
+    const coverageGainSlider = document.createElement('input');
+    coverageGainSlider.type = 'range';
+    coverageGainSlider.id = 'coverage-gain-filter';
+    coverageGainSlider.dataset.tableId = 'summary-table';
+    coverageGainSlider.dataset.column = '4';
+    coverageGainSlider.dataset.filterType = 'range';
+    coverageGainSlider.min = 0;
+    coverageGainSlider.max = 100;
+    coverageGainSlider.step = 1;
+    coverageGainSlider.value = 0;
+    coverageGainSlider.style.width = '70%';
+    
+    const coverageGainValue = document.createElement('span');
+    coverageGainValue.textContent = '0%';
+    coverageGainValue.style.width = '40px';
+    coverageGainValue.style.textAlign = 'right';
+    
+    coverageGainSlider.addEventListener('input', () => {
+        coverageGainValue.textContent = coverageGainSlider.value + '%';
+    });
+    
+    coverageGainSliderContainer.appendChild(coverageGainSlider);
+    coverageGainSliderContainer.appendChild(coverageGainValue);
+    
+    coverageGainFilterContainer.appendChild(coverageGainLabel);
+    coverageGainFilterContainer.appendChild(coverageGainSliderContainer);
+    projectSummaryFilters.appendChild(coverageGainFilterContainer);
+    
+    // Success Rate filter (slider)
+    const successRateFilterContainer = document.createElement('div');
+    successRateFilterContainer.style.marginBottom = '15px';
+    
+    const successRateLabel = document.createElement('label');
+    successRateLabel.textContent = 'Min Success Rate:';
+    successRateLabel.style.display = 'block';
+    successRateLabel.style.marginBottom = '3px';
+    
+    // Create slider container
+    const successRateSliderContainer = document.createElement('div');
+    successRateSliderContainer.style.display = 'flex';
+    successRateSliderContainer.style.alignItems = 'center';
+    successRateSliderContainer.style.gap = '10px';
+    
+    const successRateSlider = document.createElement('input');
+    successRateSlider.type = 'range';
+    successRateSlider.id = 'success-rate-filter';
+    successRateSlider.dataset.tableId = 'summary-table';
+    successRateSlider.dataset.column = '3'; // Column for Successful benchmarks
+    successRateSlider.dataset.compareColumn = '2'; // Column for Total benchmarks
+    successRateSlider.dataset.filterType = 'success-rate';
+    successRateSlider.min = 0;
+    successRateSlider.max = 100;
+    successRateSlider.step = 5;
+    successRateSlider.value = 0;
+    successRateSlider.style.width = '70%';
+    
+    const successRateValue = document.createElement('span');
+    successRateValue.textContent = '0%';
+    successRateValue.style.width = '40px';
+    successRateValue.style.textAlign = 'right';
+    
+    successRateSlider.addEventListener('input', () => {
+        successRateValue.textContent = successRateSlider.value + '%';
+    });
+    
+    successRateSliderContainer.appendChild(successRateSlider);
+    successRateSliderContainer.appendChild(successRateValue);
+    
+    successRateFilterContainer.appendChild(successRateLabel);
+    successRateFilterContainer.appendChild(successRateSliderContainer);
+    projectSummaryFilters.appendChild(successRateFilterContainer);
+    
     // Add project summary filters to the container
     filtersContainer.appendChild(projectSummaryFilters);
+    
+    // Create language coverage filters
+    const languageFilters = document.createElement('div');
+    languageFilters.style.flex = '1';
+    languageFilters.style.minWidth = '250px';
+    
+    const languageTitle = document.createElement('h4');
+    languageTitle.textContent = 'Language Coverage Filters';
+    languageTitle.style.marginBottom = '10px';
+    languageFilters.appendChild(languageTitle);
+    
+    // Language filter (dropdown)
+    const languageFilterContainer = document.createElement('div');
+    languageFilterContainer.style.marginBottom = '10px';
+    
+    const languageLabel = document.createElement('label');
+    languageLabel.textContent = 'Language:';
+    languageLabel.style.display = 'block';
+    languageLabel.style.marginBottom = '3px';
+    
+    const languageSelect = document.createElement('select');
+    languageSelect.id = 'language-filter';
+    languageSelect.dataset.tableId = 'language-coverage-gain';
+    languageSelect.dataset.column = '0';
+    languageSelect.dataset.filterType = 'select';
+    languageSelect.style.width = '100%';
+    languageSelect.style.padding = '5px';
+    
+    // Add default option
+    const defaultLanguageOption = document.createElement('option');
+    defaultLanguageOption.value = '';
+    defaultLanguageOption.textContent = 'All';
+    languageSelect.appendChild(defaultLanguageOption);
+    
+    // Get unique language values
+    const languageTable = document.getElementById('language-coverage-gain');
+    if (languageTable) {
+        const uniqueLanguages = new Set();
+        Array.from(languageTable.querySelectorAll('tbody tr')).forEach(row => {
+            const languageCell = row.children[0];
+            const language = languageCell.textContent.trim();
+            if (language) uniqueLanguages.add(language);
+        });
+        
+        // Add options for each language
+        Array.from(uniqueLanguages).sort().forEach(language => {
+            const option = document.createElement('option');
+            option.value = language;
+            option.textContent = language;
+            languageSelect.appendChild(option);
+        });
+    }
+    
+    languageFilterContainer.appendChild(languageLabel);
+    languageFilterContainer.appendChild(languageSelect);
+    languageFilters.appendChild(languageFilterContainer);
+    
+    // Coverage Increase filter (slider)
+    const coverageIncreaseFilterContainer = document.createElement('div');
+    coverageIncreaseFilterContainer.style.marginBottom = '15px';
+    
+    const coverageIncreaseLabel = document.createElement('label');
+    coverageIncreaseLabel.textContent = 'Min Coverage Increase:';
+    coverageIncreaseLabel.style.display = 'block';
+    coverageIncreaseLabel.style.marginBottom = '3px';
+    
+    // Create slider container
+    const coverageIncreaseSliderContainer = document.createElement('div');
+    coverageIncreaseSliderContainer.style.display = 'flex';
+    coverageIncreaseSliderContainer.style.alignItems = 'center';
+    coverageIncreaseSliderContainer.style.gap = '10px';
+    
+    const coverageIncreaseSlider = document.createElement('input');
+    coverageIncreaseSlider.type = 'range';
+    coverageIncreaseSlider.id = 'coverage-increase-filter';
+    coverageIncreaseSlider.dataset.tableId = 'language-coverage-gain';
+    coverageIncreaseSlider.dataset.column = '5'; // Column for relative increase
+    coverageIncreaseSlider.dataset.filterType = 'range';
+    coverageIncreaseSlider.min = 0;
+    coverageIncreaseSlider.max = 100;
+    coverageIncreaseSlider.step = 1;
+    coverageIncreaseSlider.value = 0;
+    coverageIncreaseSlider.style.width = '70%';
+    
+    const coverageIncreaseValue = document.createElement('span');
+    coverageIncreaseValue.textContent = '0%';
+    coverageIncreaseValue.style.width = '40px';
+    coverageIncreaseValue.style.textAlign = 'right';
+    
+    coverageIncreaseSlider.addEventListener('input', () => {
+        coverageIncreaseValue.textContent = coverageIncreaseSlider.value + '%';
+    });
+    
+    coverageIncreaseSliderContainer.appendChild(coverageIncreaseSlider);
+    coverageIncreaseSliderContainer.appendChild(coverageIncreaseValue);
+    
+    coverageIncreaseFilterContainer.appendChild(coverageIncreaseLabel);
+    coverageIncreaseFilterContainer.appendChild(coverageIncreaseSliderContainer);
+    languageFilters.appendChild(coverageIncreaseFilterContainer);
+    
+    // Add language filters to the container
+    filtersContainer.appendChild(languageFilters);
     
     // Reset button
     const resetButtonContainer = document.createElement('div');
@@ -486,8 +829,24 @@ td .signature {
     
     resetButton.addEventListener('click', () => {
         // Reset all filter inputs
-        document.querySelectorAll('#project-filter, #status-filter, #project-name-filter').forEach(input => {
+        document.querySelectorAll('select').forEach(input => {
             input.value = '';
+        });
+        
+        // Reset range inputs
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.value = slider.min;
+            // Update the associated value display
+            const sliderContainer = slider.parentElement;
+            const valueDisplay = sliderContainer.querySelector('span');
+            if (valueDisplay) {
+                valueDisplay.textContent = slider.min + '%';
+            }
+        });
+        
+        // Reset checkbox inputs
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
         });
         
         // Clear the search input
@@ -511,10 +870,22 @@ td .signature {
         const searchTerm = searchInput.value.toLowerCase().trim();
         const tables = document.querySelectorAll('table.sortable-table');
         
-        // Get filter values
+        // Get filter values for benchmark table
         const projectFilter = document.getElementById('project-filter').value;
         const statusFilter = document.getElementById('status-filter').value;
+        const buildRateFilter = parseInt(document.getElementById('build-rate-filter').value);
+        const crashRateFilter = parseInt(document.getElementById('crash-rate-filter').value);
+        const coverageFilter = parseInt(document.getElementById('coverage-filter').value);
+        const bugsFilter = document.getElementById('bugs-filter').checked;
+        
+        // Get filter values for project summary table
         const projectNameFilter = document.getElementById('project-name-filter').value;
+        const coverageGainFilter = parseInt(document.getElementById('coverage-gain-filter').value);
+        const successRateFilter = parseInt(document.getElementById('success-rate-filter').value);
+        
+        // Get filter values for language coverage table
+        const languageFilter = document.getElementById('language-filter').value;
+        const coverageIncreaseFilter = parseInt(document.getElementById('coverage-increase-filter').value);
         
         tables.forEach(table => {
             const rows = Array.from(table.querySelectorAll('tbody tr'));
@@ -540,12 +911,81 @@ td .signature {
                         const statusValue = statusCell.dataset.sortValue || statusCell.textContent.trim();
                         if (statusValue !== statusFilter) isMatch = false;
                     }
+                    
+                    // Build Rate filter (slider)
+                    if (isMatch && buildRateFilter > 0) {
+                        const buildRateCell = row.children[3];
+                        const buildRateText = buildRateCell.textContent.trim();
+                        const buildRateValue = parseFloat(buildRateText.replace('%', ''));
+                        if (isNaN(buildRateValue) || buildRateValue < buildRateFilter) isMatch = false;
+                    }
+                    
+                    // Crash Rate filter (slider)
+                    if (isMatch && crashRateFilter > 0) {
+                        const crashRateCell = row.children[4];
+                        const crashRateText = crashRateCell.textContent.trim();
+                        const crashRateValue = parseFloat(crashRateText.replace('%', ''));
+                        if (isNaN(crashRateValue) || crashRateValue < crashRateFilter) isMatch = false;
+                    }
+                    
+                    // Has Bugs filter (checkbox)
+                    if (isMatch && bugsFilter) {
+                        const bugsCell = row.children[5];
+                        const bugsValue = parseInt(bugsCell.textContent.trim());
+                        if (isNaN(bugsValue) || bugsValue <= 0) isMatch = false;
+                    }
+                    
+                    // Coverage filter (slider)
+                    if (isMatch && coverageFilter > 0) {
+                        const coverageCell = row.children[6];
+                        const coverageText = coverageCell.textContent.trim();
+                        const coverageValue = parseFloat(coverageText.replace('%', ''));
+                        if (isNaN(coverageValue) || coverageValue < coverageFilter) isMatch = false;
+                    }
+                    
                 } else if (isMatch && tableId === 'summary-table') {
                     // Project name filter for summary table
                     if (projectNameFilter) {
                         const projectNameCell = row.children[1];
                         const projectName = projectNameCell.dataset.sortValue || projectNameCell.textContent.trim();
                         if (projectName !== projectNameFilter) isMatch = false;
+                    }
+                    
+                    // Coverage Gain filter (slider)
+                    if (isMatch && coverageGainFilter > 0) {
+                        const coverageGainCell = row.children[4];
+                        const coverageGainText = coverageGainCell.textContent.trim();
+                        const coverageGainValue = parseFloat(coverageGainText.replace('%', ''));
+                        if (isNaN(coverageGainValue) || coverageGainValue < coverageGainFilter) isMatch = false;
+                    }
+                    
+                    // Success Rate filter (slider)
+                    if (isMatch && successRateFilter > 0) {
+                        const totalCell = row.children[2];
+                        const successCell = row.children[3];
+                        const totalValue = parseInt(totalCell.textContent.trim());
+                        const successValue = parseInt(successCell.textContent.trim());
+                        
+                        if (!isNaN(totalValue) && !isNaN(successValue) && totalValue > 0) {
+                            const successRate = (successValue / totalValue) * 100;
+                            if (successRate < successRateFilter) isMatch = false;
+                        }
+                    }
+                    
+                } else if (isMatch && tableId === 'language-coverage-gain') {
+                    // Language filter
+                    if (languageFilter) {
+                        const languageCell = row.children[0];
+                        const language = languageCell.textContent.trim();
+                        if (language !== languageFilter) isMatch = false;
+                    }
+                    
+                    // Coverage Increase filter (slider)
+                    if (isMatch && coverageIncreaseFilter > 0) {
+                        const coverageIncreaseCell = row.children[5];
+                        const coverageIncreaseText = coverageIncreaseCell.textContent.trim();
+                        const coverageIncreaseValue = parseFloat(coverageIncreaseText.replace('%', ''));
+                        if (isNaN(coverageIncreaseValue) || coverageIncreaseValue < coverageIncreaseFilter) isMatch = false;
                     }
                 }
                 
@@ -557,9 +997,15 @@ td .signature {
     
     // Add event listeners to search and filters
     searchInput.addEventListener('input', performSearch);
-    document.getElementById('project-filter').addEventListener('change', performSearch);
-    document.getElementById('status-filter').addEventListener('change', performSearch);
-    document.getElementById('project-name-filter').addEventListener('change', performSearch);
+    
+    // Add event listeners to all filter inputs
+    document.querySelectorAll('select, input[type="range"], input[type="checkbox"]').forEach(input => {
+        if (input.type === 'range') {
+            input.addEventListener('input', performSearch);
+        } else {
+            input.addEventListener('change', performSearch);
+        }
+    });
 })();
 </script>
 {% endblock %}
